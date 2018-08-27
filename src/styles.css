@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+.modal-header .close {
+  padding: 1rem !important;
+  margin: -1rem auto -1rem -1rem !important;
+}

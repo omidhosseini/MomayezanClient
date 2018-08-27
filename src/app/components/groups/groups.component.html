@@ -1,4 +1,66 @@
-<p *ngFor="let j of model">
-  id={{j.id}}<br> code={{j.code}}
-  <br> title={{j.title}} groups works!
-</p>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  افزودن</button>
+
+<div class="clear">&nbsp;</div>
+<table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class=" table table-bordered table-hover table-striped row-border hover">
+  <thead>
+    <tr>
+      <th>code</th>
+      <th>title</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of model;let i=index">
+      <input type="hidden" class="id" value="{{item.id}}">
+
+      <td (dblclick)="initEdit(i+1)">
+        <label for="itmTitle" *ngIf=" !onEditing(i+1) ">{{item.code}}</label>
+        <input #tCode type="text" (keyup.enter)="updateCode(item,tCode.value )" *ngIf="onEditing(i+1) " value="{{item.code}}" class="form-control"
+          name="itmCode-{{item.id}}" id="itmCode-{{item.id}}" aria-describedby="helpId" placeholder="">
+      </td>
+
+      <td (dblclick)="initEdit(i+1)">
+        <label for="itmTitle" *ngIf=" !onEditing(i+1) ">{{item.title}}</label>
+        <input #tTitle type="text" (keyup.enter)="updateTitle(item, tTitle.value)" *ngIf="onEditing(i+1) " value="{{item.title}}"
+          class="form-control" name="itmTitle-{{item.id}}" id="itmTitle-{{item.id}}" aria-describedby="helpId" placeholder="">
+      </td>
+
+    </tr>
+  </tbody>
+  <tfoot>
+
+  </tfoot>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header ">
+        <h5 class="modal-title" id="exampleModalLabel">گروه</h5>
+        <button type="button" class="close " data-dismiss="modal" (click)="rerender()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="registerForm" (ngSubmit)="submitGroup()">
+          <div class="form-group">
+            <label for="code">کد</label>
+            <input type="code" formControlName="code" class="form-control" name="code" id="code" aria-describedby="groupCode" placeholder="کد گروه">
+            <small id="groupCode" class="form-text text-muted">کد گروه را وارد نمایید</small>
+          </div>
+          <div class="form-group">
+            <label for="title">عنوان</label>
+            <input type="title" formControlName="title" name="title" id="title" class="form-control" placeholder="عنوان" aria-describedby="groupTitle">
+            <small id="groupTitle" class="text-muted">عنوان گروه را وارد نمایید</small>
+          </div>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="rerender()">انصراف</button>
+          <button type="submit" class="btn btn-primary">تایید</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
