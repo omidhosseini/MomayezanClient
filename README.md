@@ -1,5 +1,5 @@
-# MomayezanClient
-Sample Angular project
+# Sample_Angular_services_components
+Sample Angular project (using service)
 
 # Dependencies 
   
