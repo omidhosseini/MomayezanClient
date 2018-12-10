@@ -10,7 +10,7 @@ import { DataTablesModule } from "angular-datatables";
 import { AppComponent } from "./app.component";
 import { GroupsComponent } from "./components/groups/groups.component";
 import { GroupsService } from "./services/groups.service";
-import { HttpModule } from "@angular/http";
+import { HttpClientModule } from "@angular/common/http";
 
 const routes = [
   {
@@ -33,7 +33,7 @@ const routes = [
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     RouterModule.forRoot(routes),
     DataTablesModule,
     CommonModule,

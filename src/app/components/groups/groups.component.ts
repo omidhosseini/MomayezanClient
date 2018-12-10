@@ -11,7 +11,6 @@ import { GroupsService } from "../../services/groups.service";
 import { GroupsDto } from "../../models/groups/groups.model";
 import { DataTableDirective } from "angular-datatables";
 import { Subject } from "rxjs";
-import { Key } from "protractor";
 @Component({
   selector: "app-groups",
   templateUrl: "./groups.component.html",
@@ -24,7 +23,7 @@ export class GroupsComponent implements OnInit, OnDestroy, AfterViewInit {
   dtTrigger: Subject<any> = new Subject<any>();
   SUCCESS_MESSAGE: string = "عملیات با موفقیت انجام شد";
   ERROR_MESSAGE: string = "";
-  model: GroupsDto[];
+  model: any;
   registerForm: FormGroup;
   lastIndex: number = 0;
   isEditing: boolean = false;
@@ -33,7 +32,9 @@ export class GroupsComponent implements OnInit, OnDestroy, AfterViewInit {
     private grpService: GroupsService,
     private fb: FormBuilder,
     private toastr: ToastrService
-  ) {}
+  ) {
+    console.log("Groups");
+  }
 
   async ngOnInit() {
     this.registerForm = this.fb.group({
@@ -75,11 +76,8 @@ export class GroupsComponent implements OnInit, OnDestroy, AfterViewInit {
   async GetList() {
     var me = this;
     me.model = null;
-    let res = this.grpService
-      .GetAllAsync()
-      .toPromise()
-      .then(r => r.json());
-    me.model = await res;
+    let res = await this.grpService.GetAllAsync().toPromise();
+    me.model = res;
   }
 
   initEdit(index) {
@@ -143,13 +141,8 @@ export class GroupsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   showError(msg) {
     this.toastr.error(msg.errors[0].message, "پیام سیستم");
-
-    // if (k == "errors") this.toastr.error("پیام سیستم", v.toString());
   }
   private handleError(error: any): Promise<any> {
-    // console.error("An error occurred", error.json().errors[0].message); // for demo purposes only
-    // alert(error.json().errors[0].message);
-
     return Promise.reject(error.message || error);
   }
 }

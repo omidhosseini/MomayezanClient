@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers } from "@angular/http";
+import { Headers } from "@angular/http";
 import { GroupsDto } from "../models/groups/groups.model";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+
 @Injectable({
   providedIn: "root"
 })
@@ -9,10 +11,10 @@ export class GroupsService {
   private GET_GROUP_URL = "/Group/GetAllAsync";
   private POST_GROUP_URL = "/Group/Add";
   private PUT_GROUP_URL = "/Group/Edit";
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   private getheader() {
-    const header = new Headers();
+    const header = new HttpHeaders();
     header.append("Accept", "application/json");
     header.append("Content-Type", "application/json");
     return header;
